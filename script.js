@@ -1,7 +1,5 @@
-// Stickers array for gallery
 const stickers = ['✨', '📸', '🌹', '💭', '🌺', '✨'];
 
-// Photo names in your folder
 const photoNames = [
     'IMG_20260705_174921.jpg',
     'Snapchat-1091864137.jpg',
@@ -11,7 +9,6 @@ const photoNames = [
     'VID_20260713_092954_659_bsl.mp4'
 ];
 
-// Load gallery from photos folder
 function loadGallery() {
     const galleryGrid = document.getElementById('gallery-grid');
     
@@ -22,11 +19,13 @@ function loadGallery() {
         const galleryItem = document.createElement('div');
         galleryItem.className = 'gallery-item';
         
-        // Check if it's a video
         if (photoName.endsWith('.mp4')) {
             galleryItem.innerHTML = `
-                <div class="photo-placeholder video-placeholder">
-                    <video src="${photoPath}" controls style="width:100%; height:100%; object-fit:cover;"></video>
+                <div class="photo-placeholder">
+                    <video controls style="width:100%; height:100%; object-fit:cover;">
+                        <source src="${photoPath}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
                 <div class="photo-sticker">${sticker}</div>
             `;
@@ -43,20 +42,16 @@ function loadGallery() {
     });
 }
 
-// Smooth scroll behavior
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
+            target.scrollIntoView({ behavior: 'smooth' });
         }
     });
 });
 
-// Add parallax effect to hero section
 window.addEventListener('scroll', () => {
     const hero = document.querySelector('.hero');
     if (hero) {
@@ -64,7 +59,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Animate elements on scroll
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
@@ -79,11 +73,9 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Load gallery on page load
 window.addEventListener('load', () => {
     loadGallery();
     
-    // Observe gallery items after loading
     setTimeout(() => {
         document.querySelectorAll('.gallery-item').forEach(item => {
             item.style.opacity = '0';
@@ -94,7 +86,6 @@ window.addEventListener('load', () => {
     }, 100);
 });
 
-// Add random tilt to stickers
 const stickerElements = document.querySelectorAll('.sticker');
 stickerElements.forEach(sticker => {
     const randomRotate = Math.random() * 20 - 10;
